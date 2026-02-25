@@ -72,9 +72,12 @@ export interface Rights {
 export interface BillingEvent {
   id: string;
   type: string;
-  credits?: number;
+  quantity: number;
+  unit: string;
+  tag?: string | null;
+  api_token_id?: string | null;
+  metadata?: Record<string, unknown> | null;
   created_at: string;
-  tags?: string[];
   [key: string]: unknown;
 }
 
@@ -157,6 +160,7 @@ export interface GetBillingOptions {
   end_date?: string;
   type?: string;
   tags?: string;
+  token_id?: string;
 }
 
 export interface PaginationOptions {
@@ -192,9 +196,37 @@ export interface PaginatedResponse<T> {
   has_more?: boolean;
 }
 
+export interface BillingSummary {
+  credit_balance: number;
+  total_credits_used: number;
+  protection_credits: number;
+  storage_credits: number;
+}
+
+export interface StorageStats {
+  total_bytes: number;
+  file_count: number;
+  daily_cost: number;
+  weekly_cost: number;
+  monthly_cost: number;
+  rate_per_mb_per_day: number;
+}
+
+export interface AlgorithmUsage {
+  algorithm: string;
+  display_name: string;
+  operations: number;
+  credits: number;
+}
+
 export interface BillingResponse {
-  events: BillingEvent[];
-  portal_url?: string;
+  data: {
+    summary: BillingSummary;
+    storage: StorageStats | null;
+    by_algorithm: AlgorithmUsage[];
+    events: BillingEvent[];
+    portal_url: string | null;
+  };
 }
 
 export interface SidearmConfig {

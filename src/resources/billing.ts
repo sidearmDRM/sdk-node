@@ -4,7 +4,7 @@ import type { BillingResponse, GetBillingOptions } from "../types.js";
 export class BillingResource {
   constructor(private http: HttpClient) {}
 
-  /** Get billing events and usage for an account. */
+  /** Get billing summary, storage stats, algorithm breakdown, and events for an account. */
   async get(
     accountId: string,
     opts?: GetBillingOptions,
@@ -16,6 +16,7 @@ export class BillingResource {
         end_date: opts?.end_date,
         type: opts?.type,
         tags: opts?.tags,
+        token_id: opts?.token_id,
       },
     );
   }
