@@ -18,7 +18,7 @@ import type { Job } from "./job.js";
  * import { Sidearm } from '@sidearmdrm/sdk-node';
  *
  * const client = new Sidearm({ apiKey: 'sk_live_...' });
- * const job = await client.protect({ mediaUrl: '...', level: 'maximum' });
+ * const job = await client.protect({ media_url: '...', level: 'maximum' });
  * const result = await job.wait();
  * ```
  */

@@ -1,4 +1,4 @@
-# @sidearmdrm/sdk-node-node
+# @sidearmdrm/sdk-node
 
 TypeScript client for the [Sidearm API](https://sdrm.io). Protect media from AI training, detect AI content, search for stolen work.
 
