@@ -5,6 +5,7 @@ import type {
   UpdateMediaOptions,
   PaginationOptions,
   PaginatedResponse,
+  ProvenanceResult,
 } from "../types.js";
 
 export class MediaResource {
@@ -42,6 +43,17 @@ export class MediaResource {
   async delete(id: string): Promise<{ deleted: boolean }> {
     return this.http.delete(
       `/api/v1/media/${encodeURIComponent(id)}`,
+    );
+  }
+
+  /**
+   * Get the full provenance chain for a media asset.
+   * Returns every algorithm applied, C2PA manifest, membership inference results,
+   * and all searches where this media appeared as a match.
+   */
+  async provenance(id: string): Promise<ProvenanceResult> {
+    return this.http.get<ProvenanceResult>(
+      `/api/v1/media/${encodeURIComponent(id)}/provenance`,
     );
   }
 }

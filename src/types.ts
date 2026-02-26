@@ -229,6 +229,50 @@ export interface BillingResponse {
   };
 }
 
+export interface ProvenanceProtectionStep {
+  id: string;
+  algorithm: string;
+  algorithm_version: string;
+  applied_at: string;
+  duration_ms: number | null;
+  metadata: Record<string, unknown> | null;
+}
+
+export interface ProvenanceSearchMatch {
+  search_id: string;
+  search_type: string;
+  score: number;
+  rank: number;
+  searched_at: string;
+}
+
+export interface ProvenanceMembershipResult {
+  id: string;
+  suspect_model: string;
+  method: string;
+  verdict: string;
+  combined_score: number | null;
+  created_at: string;
+  [key: string]: unknown;
+}
+
+export interface ProvenanceResult {
+  media: {
+    id: string;
+    type: string;
+    account_id: string;
+    tags: string[];
+    is_public: boolean;
+    created_at: string;
+    updated_at: string;
+    expires_at: string;
+  };
+  c2pa_manifest: string | null;
+  protection_chain: ProvenanceProtectionStep[];
+  membership_inference: ProvenanceMembershipResult[];
+  searches_found_in: ProvenanceSearchMatch[];
+}
+
 export interface SidearmConfig {
   apiKey: string;
   baseUrl?: string;
