@@ -174,6 +174,7 @@ export interface PaginationOptions {
 
 export interface JobCreatedResponse {
   job_id: string;
+  status: JobStatus;
   status_url: string;
 }
 
@@ -220,13 +221,11 @@ export interface AlgorithmUsage {
 }
 
 export interface BillingResponse {
-  data: {
-    summary: BillingSummary;
-    storage: StorageStats | null;
-    by_algorithm: AlgorithmUsage[];
-    events: BillingEvent[];
-    portal_url: string | null;
-  };
+  summary: BillingSummary;
+  storage: StorageStats | null;
+  by_algorithm: AlgorithmUsage[];
+  events: BillingEvent[];
+  portal_url: string | null;
 }
 
 export interface ProvenanceProtectionStep {
