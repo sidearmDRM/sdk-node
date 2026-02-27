@@ -7,7 +7,7 @@ export class JobsResource {
 
   /** Get the current state of a job by ID. */
   async get(id: string): Promise<JobData> {
-    return this.http.get<JobData>(
+    return this.http.getOne<JobData>(
       `/api/v1/jobs/${encodeURIComponent(id)}`,
     );
   }

@@ -64,6 +64,40 @@ export class HttpClient {
     });
   }
 
+  // ── Envelope-unwrapping helpers ────────────────────────────────────────────
+  // All API responses are wrapped in { data: ... }. These helpers unwrap them.
+
+  async getOne<T = unknown>(
+    path: string,
+    params?: Record<string, string | number | undefined>,
+  ): Promise<T> {
+    const res = await this.get<{ data: T }>(path, params);
+    return res.data;
+  }
+
+  async getList<T = unknown>(
+    path: string,
+    params?: Record<string, string | number | undefined>,
+  ): Promise<{ data: T[]; cursor?: string | null }> {
+    const res = await this.get<{ data: T[]; meta?: { next_cursor?: string | null } }>(path, params);
+    return { data: res.data, cursor: res.meta?.next_cursor };
+  }
+
+  async postOne<T = unknown>(path: string, body?: unknown): Promise<T> {
+    const res = await this.post<{ data: T }>(path, body);
+    return res.data;
+  }
+
+  async patchOne<T = unknown>(path: string, body: unknown): Promise<T> {
+    const res = await this.patch<{ data: T }>(path, body);
+    return res.data;
+  }
+
+  async deleteOne<T = unknown>(path: string): Promise<T> {
+    const res = await this.delete<{ data: T }>(path);
+    return res.data;
+  }
+
   private async request<T>(url: URL, init: RequestInit): Promise<T> {
     const res = await fetch(url, {
       ...init,

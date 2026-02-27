@@ -36,7 +36,7 @@ export class Job {
    * Fetch the current job state from the API. Returns the updated `JobData`.
    */
   async poll(): Promise<JobData> {
-    this._latest = await this.http.get<JobData>(
+    this._latest = await this.http.getOne<JobData>(
       `/api/v1/jobs/${encodeURIComponent(this.id)}`,
     );
     return this._latest;

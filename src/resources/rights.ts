@@ -6,7 +6,7 @@ export class RightsResource {
 
   /** Get C2PA, IPTC, and licensing information for a media asset. */
   async get(mediaId: string): Promise<Rights> {
-    return this.http.get<Rights>(
+    return this.http.getOne<Rights>(
       `/api/v1/rights/${encodeURIComponent(mediaId)}`,
     );
   }

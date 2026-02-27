@@ -15,7 +15,7 @@ export class DetectResource {
    * Returns a `Job` handle for polling the async result.
    */
   async ai(opts: DetectAiOptions): Promise<Job> {
-    const res = await this.http.post<JobCreatedResponse>(
+    const res = await this.http.postOne<JobCreatedResponse>(
       "/api/v1/detect/ai",
       opts,
     );
@@ -24,7 +24,7 @@ export class DetectResource {
 
   /** Synchronous fingerprint detection against your indexed library. */
   async fingerprint(opts: DetectFingerprintOptions): Promise<unknown> {
-    return this.http.post("/api/v1/detect", opts);
+    return this.http.postOne("/api/v1/detect", opts);
   }
 
   /**
@@ -32,7 +32,7 @@ export class DetectResource {
    * Returns a `Job` handle for polling the async result.
    */
   async membership(opts: DetectMembershipOptions): Promise<Job> {
-    const res = await this.http.post<JobCreatedResponse>(
+    const res = await this.http.postOne<JobCreatedResponse>(
       "/api/v1/detect/membership",
       opts,
     );

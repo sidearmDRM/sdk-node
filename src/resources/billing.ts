@@ -9,7 +9,7 @@ export class BillingResource {
     accountId: string,
     opts?: GetBillingOptions,
   ): Promise<BillingResponse> {
-    return this.http.get<BillingResponse>(
+    return this.http.getOne<BillingResponse>(
       `/api/v1/billing/${encodeURIComponent(accountId)}`,
       {
         start_date: opts?.start_date,

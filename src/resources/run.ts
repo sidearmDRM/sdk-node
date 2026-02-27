@@ -10,7 +10,7 @@ export class RunResource {
    * Returns a `Job` handle for polling the async result.
    */
   async execute(opts: RunOptions): Promise<Job> {
-    const res = await this.http.post<JobCreatedResponse>("/api/v1/run", opts);
+    const res = await this.http.postOne<JobCreatedResponse>("/api/v1/run", opts);
     return new Job(this.http, res);
   }
 }

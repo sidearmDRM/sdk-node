@@ -10,7 +10,7 @@ export class ProtectResource {
    * Returns a `Job` handle for polling the async result.
    */
   async execute(opts: ProtectOptions): Promise<Job> {
-    const res = await this.http.post<JobCreatedResponse>(
+    const res = await this.http.postOne<JobCreatedResponse>(
       "/api/v1/protect",
       opts,
     );
