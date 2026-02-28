@@ -272,6 +272,21 @@ export interface ProvenanceResult {
   searches_found_in: ProvenanceSearchMatch[];
 }
 
+export interface C2paChainEntry {
+  /** Tool or device that created this step, e.g. "Nikon Z7II" or "Adobe Photoshop/24.0". */
+  generator: string;
+  title?: string;
+  /** C2PA action URIs, e.g. ["c2pa.captured"], ["c2pa.edited"]. */
+  actions: string[];
+}
+
+export interface IdentifyResult {
+  /** Sidearm media ID if the asset is registered in your account, otherwise null. */
+  media_id: string | null;
+  /** Ordered C2PA chain embedded in the media, from origin to current. Empty if none. */
+  c2pa_chain: C2paChainEntry[];
+}
+
 export interface SidearmConfig {
   apiKey: string;
   baseUrl?: string;

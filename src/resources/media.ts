@@ -6,6 +6,7 @@ import type {
   PaginationOptions,
   PaginatedResponse,
   ProvenanceResult,
+  IdentifyResult,
 } from "../types.js";
 
 export class MediaResource {
@@ -55,5 +56,16 @@ export class MediaResource {
     return this.http.getOne<ProvenanceResult>(
       `/api/v1/media/${encodeURIComponent(id)}/provenance`,
     );
+  }
+
+  /**
+   * Identify a media asset by its embedded Sidearm fingerprint and extract its C2PA chain.
+   * Returns the Sidearm media_id if registered in your account (null otherwise) and the
+   * full ordered C2PA chain (e.g. Nikon Z7II → Photoshop → sidearm) from the file's metadata.
+   */
+  async identify(mediaUrl: string): Promise<IdentifyResult> {
+    return this.http.postOne<IdentifyResult>("/api/v1/media/identify", {
+      media_url: mediaUrl,
+    });
   }
 }
