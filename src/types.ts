@@ -102,6 +102,14 @@ export interface RunOptions {
   filename?: string;
 }
 
+export interface ExtractOptions {
+  algorithms: string[];
+  media_url?: string;
+  media?: string;
+  text?: string;
+  mime?: string;
+}
+
 export interface ProtectOptions {
   media_url?: string;
   media?: string;
@@ -175,7 +183,22 @@ export interface PaginationOptions {
 export interface JobCreatedResponse {
   job_id: string;
   status: JobStatus;
+  algorithms?: string[];
   status_url: string;
+}
+
+export interface EmbeddingResult {
+  algorithm: string;
+  vector: number[];
+  dimension: number;
+  metric: "cosine" | "hamming";
+}
+
+export interface ExtractResponse {
+  embeddings: EmbeddingResult[];
+  media_type: MediaType;
+  algorithms_applied: string[];
+  algorithms_failed: string[];
 }
 
 export interface SearchResult {

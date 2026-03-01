@@ -1,6 +1,7 @@
 import { HttpClient } from "./client.js";
 import { AlgorithmsResource } from "./resources/algorithms.js";
 import { RunResource } from "./resources/run.js";
+import { ExtractResource } from "./resources/extract.js";
 import { ProtectResource } from "./resources/protect.js";
 import { JobsResource } from "./resources/jobs.js";
 import { SearchResource } from "./resources/search.js";
@@ -8,7 +9,7 @@ import { DetectResource } from "./resources/detect.js";
 import { MediaResource } from "./resources/media.js";
 import { RightsResource } from "./resources/rights.js";
 import { BillingResource } from "./resources/billing.js";
-import type { SidearmConfig, RunOptions, ProtectOptions } from "./types.js";
+import type { SidearmConfig, RunOptions, ExtractOptions, ProtectOptions } from "./types.js";
 import type { Job } from "./job.js";
 
 /**
@@ -39,6 +40,7 @@ export class Sidearm {
   readonly billing: BillingResource;
 
   private _run: RunResource;
+  private _extract: ExtractResource;
   private _protect: ProtectResource;
 
   constructor(config: SidearmConfig) {
@@ -46,6 +48,7 @@ export class Sidearm {
 
     this.algorithms = new AlgorithmsResource(http);
     this._run = new RunResource(http);
+    this._extract = new ExtractResource(http);
     this._protect = new ProtectResource(http);
     this.jobs = new JobsResource(http);
     this.search = new SearchResource(http);
@@ -61,6 +64,15 @@ export class Sidearm {
    */
   run(opts: RunOptions): Promise<Job> {
     return this._run.execute(opts);
+  }
+
+  /**
+   * Extract raw embedding vectors from media using one or more named algorithms.
+   * Returns a `Job` handle for polling the async result.
+   * The job result contains: { embeddings, media_type, algorithms_applied, algorithms_failed }
+   */
+  extract(opts: ExtractOptions): Promise<Job> {
+    return this._extract.execute(opts);
   }
 
   /**
