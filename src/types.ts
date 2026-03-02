@@ -25,9 +25,20 @@ export interface Algorithm {
   media_types: MediaType[];
   technique: string;
   gpu_required: boolean;
+  /** Semantic version of this algorithm implementation (e.g., "2.0.0"). */
+  version: string;
   paper_url?: string | null;
   runnable?: boolean;
-  resolves_to?: string[];
+  /** Version of the embedding model. Only present for extractable algorithms. */
+  embedding_version?: string | null;
+  /** Dimension of vectors produced. Only present for extractable algorithms. */
+  embedding_dimension?: number | null;
+  /** Similarity metric. Only present for extractable algorithms. */
+  embedding_metric?: "COSINE" | "L2" | "IP" | "HAMMING" | null;
+  /** Active Zilliz collection name. Format: {slug}_v{major}. Only for extractable algorithms. */
+  active_collection?: string | null;
+  /** All collection names to search (current + legacy). Only for extractable algorithms. */
+  searchable_collections?: string[] | null;
 }
 
 export interface Media {
