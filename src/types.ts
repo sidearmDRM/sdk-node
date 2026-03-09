@@ -321,6 +321,29 @@ export interface IdentifyResult {
   c2pa_chain: C2paChainEntry[];
 }
 
+export interface CreateShareOptions {
+  type: "detection" | "search" | "provenance";
+  result_id: string;
+}
+
+export interface SharedResult {
+  id: string;
+  type: string;
+  is_public: boolean;
+  result: Record<string, unknown>;
+  created_at: string;
+}
+
+export interface Deletion {
+  id: string;
+  media_id: string;
+  account_id: string;
+  algorithms_purged: string[];
+  storage_purged: boolean;
+  vectors_purged: boolean;
+  created_at: string;
+}
+
 export interface SidearmConfig {
   apiKey: string;
   baseUrl?: string;

@@ -9,6 +9,7 @@ import { DetectResource } from "./resources/detect.js";
 import { MediaResource } from "./resources/media.js";
 import { RightsResource } from "./resources/rights.js";
 import { BillingResource } from "./resources/billing.js";
+import { SharesResource } from "./resources/shares.js";
 import type { SidearmConfig, RunOptions, ExtractOptions, ProtectOptions } from "./types.js";
 import type { Job } from "./job.js";
 
@@ -38,6 +39,8 @@ export class Sidearm {
   readonly rights: RightsResource;
   /** Billing and usage events. */
   readonly billing: BillingResource;
+  /** Create and manage shareable result links. */
+  readonly shares: SharesResource;
 
   private _run: RunResource;
   private _extract: ExtractResource;
@@ -56,6 +59,7 @@ export class Sidearm {
     this.media = new MediaResource(http);
     this.rights = new RightsResource(http);
     this.billing = new BillingResource(http);
+    this.shares = new SharesResource(http);
   }
 
   /**

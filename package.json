@@ -1,6 +1,6 @@
 {
   "name": "@sidearmdrm/sdk-node",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "TypeScript client for the Sidearm API — protect media from AI training, detect AI content, and search for stolen work",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -35,7 +35,7 @@
     "ai-detection",
     "content-credentials",
     "nightshade",
-    "glaze",
+    "metacloak",
     "c2pa"
   ],
   "author": "Sidearm <hello@sdrm.io>",

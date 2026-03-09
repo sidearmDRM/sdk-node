@@ -1,6 +1,7 @@
 import type { HttpClient } from "../client.js";
 import type {
   Media,
+  Deletion,
   RegisterMediaOptions,
   UpdateMediaOptions,
   PaginationOptions,
@@ -67,5 +68,33 @@ export class MediaResource {
     return this.http.postOne<IdentifyResult>("/api/v1/media/identify", {
       media_url: mediaUrl,
     });
+  }
+
+  /** List deletion records (paginated). */
+  async listDeletions(
+    opts?: PaginationOptions,
+  ): Promise<PaginatedResponse<Deletion>> {
+    return this.http.getList<Deletion>("/api/v1/media/deletions", {
+      cursor: opts?.cursor,
+      limit: opts?.limit,
+    });
+  }
+
+  /** Get a specific deletion record by ID. */
+  async getDeletion(id: string): Promise<Deletion> {
+    return this.http.getOne<Deletion>(
+      `/api/v1/media/deletions/${encodeURIComponent(id)}`,
+    );
+  }
+
+  /** Download a deletion certificate in JWT or PDF format. */
+  async getDeletionCertificate(
+    id: string,
+    format?: "jwt" | "pdf",
+  ): Promise<unknown> {
+    return this.http.getOne(
+      `/api/v1/media/deletions/${encodeURIComponent(id)}/certificate`,
+      format ? { format } : undefined,
+    );
   }
 }
