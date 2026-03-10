@@ -8,7 +8,7 @@ export type ProtectionLevel = "standard" | "maximum";
 export type SearchTier = "exact" | "quick" | "perceptual" | "compositional" | "full";
 export type DetectTier = "exact" | "quick" | "perceptual" | "compositional" | "full";
 export type MembershipMethod = "pattern" | "statistical" | "combined";
-export type EmbedMode = "register" | "basic" | "advanced" | "radioactive";
+export type EmbedMode = "register" | "search_ready" | "standard" | "maximum";
 export type JobStatus = "queued" | "running" | "completed" | "failed";
 export type JobType = "media_ingest" | "ai_detect" | "membership_inference";
 
@@ -50,7 +50,7 @@ export interface Media {
   original_storage_key?: string;
   preset?: string;
   algorithms_applied?: string[];
-  deletes_at?: string;
+  expires_at?: string;
   tags?: string[];
   metadata?: Record<string, unknown>;
   status: "active" | "processing";
@@ -212,23 +212,25 @@ export interface ExtractResponse {
   algorithms_failed: string[];
 }
 
-export interface SearchResult {
-  media_id: string;
-  score: number;
-  tier: string;
-  media?: Media;
+/** @deprecated Use SearchMatch instead. */
+export type SearchResult = SearchMatch;
+
+export interface SearchResponse {
+  search_id: string;
+  matches: SearchMatch[];
   [key: string]: unknown;
 }
 
-export interface SearchResponse {
-  results: SearchResult[];
-  [key: string]: unknown;
+export interface SearchMatch {
+  media_id: string;
+  score: number;
+  storage_url?: string;
+  tags?: string[];
 }
 
 export interface PaginatedResponse<T> {
   data: T[];
   cursor?: string | null;
-  has_more?: boolean;
 }
 
 export interface BillingSummary {
@@ -317,6 +319,8 @@ export interface C2paChainEntry {
 export interface IdentifyResult {
   /** Sidearm media ID if the asset is registered in your account, otherwise null. */
   media_id: string | null;
+  /** Whether a Sidearm fingerprint manifest was detected in the media. */
+  manifest_detected: boolean;
   /** Ordered C2PA chain embedded in the media, from origin to current. Empty if none. */
   c2pa_chain: C2paChainEntry[];
 }
